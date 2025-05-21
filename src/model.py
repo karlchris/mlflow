@@ -91,9 +91,9 @@ def train_model(params, epochs, train_x, train_y, valid_x, valid_y, test_x, test
         mlflow.log_metric("eval_rmse", eval_rmse)
         
         # Log training history
-        for epoch, metrics in enumerate(history.history.items()):
-            for metric_name, values in metrics:
-                mlflow.log_metric(f"train_{metric_name}", values[epoch], step=epoch)
+        for metric_name, values in history.history.items():
+            for epoch, value in enumerate(values):
+                mlflow.log_metric(f"train_{metric_name}", value, step=epoch)
         
         # Log model
         mlflow.tensorflow.log_model(model, "model", signature=signature)
